@@ -2,7 +2,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 beep = AudioSegment.from_wav("beep.wav")
-whiteNoise = AudioSegment.from_mp3("WhiteNoise.mp3")
+whiteNoise = AudioSegment.from_mp3("Testing.mp3")
 
 wakeUp = False
 
