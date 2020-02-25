@@ -10,7 +10,7 @@ WHITENOISE = AudioSegment.from_mp3("Testing.mp3")
 
 def playWhite():
     global wakeUp
-    while (!wakeUp):
+    while (wakeUp == False):
         play(WHITENOISE)
 
 def alarm():
