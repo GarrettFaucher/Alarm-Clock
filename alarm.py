@@ -1,9 +1,14 @@
+# 2020-02-25 13:15:50.537775
+
 from pydub import AudioSegment
 from pydub.playback import play
 from threading import Thread
 from datetime import datetime
 
 print(datetime.now())
+
+global BEEP
+global WHITENOISE
 
 BEEP = AudioSegment.from_wav("beep.wav")
 WHITENOISE = AudioSegment.from_mp3("Testing.mp3")
@@ -23,5 +28,5 @@ def alarm():
 
 global wakeUp
 wakeUp = False
-t1 = Thread(target=blink_loop)
+t1 = Thread(target=playWhite)
 t1.start()
