@@ -1,6 +1,5 @@
-from playsound import playsound
+from pydub import AudioSegment
+from pydub.playback import play
 
-passed = false
-
-while (passed == false):
-    play('WhiteNoise.wav')
+song = AudioSegment.from_wav("beep.wav")
+play(song)
