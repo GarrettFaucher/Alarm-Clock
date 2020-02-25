@@ -21,6 +21,7 @@ def alarm():
         play(BEEP)
         sleep(200)
 
-global wakeUp = False
+global wakeUp
+wakeUp = False
 t1 = Thread(target=blink_loop)
 t1.start()
