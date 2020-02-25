@@ -1,29 +1,37 @@
-# 2020-02-25 13:15:50.537775
-
 from pydub import AudioSegment
 from pydub.playback import play
-from threading import Thread
+import multiprocessing as mp
 from datetime import datetime
 import time
 
 global alarm_time
 global BEEP
 global WHITENOISE
-
 BEEP = AudioSegment.from_wav("beep.wav")
-WHITENOISE = AudioSegment.from_mp3("Testing.mp3")
+WHITENOISE = AudioSegment.from_mp3("whitenoise.mp3")
 
 def main():
     global alarm_time
-    alarm_time = input("Alarm Time (hh:mm): ")
     global wakeUp
-    global t1
+    global p1
+
+    alarm_time = getInput()
     wakeUp = False
-    t1 = Thread(target=playWhite)
-    t1.start()
+    p1 = mp.Process(target=playWhite) # Process for white noise so it can be killed early
+    p1.start()
+    wakeUp = True
 
     waitAlarm()
     alarm()
+
+# Gets alarm time to be set, validates input
+def getInput():
+    alarm_time = input("Alarm Time (hh:mm): ")
+    if(len(alarm_time) != 5):
+        alarm_time = getInput()
+    elif(alarm_time[2] != ":"):
+        alarm_time = getInput()
+    return alarm_time
 
 def playWhite():
     global wakeUp
@@ -32,8 +40,10 @@ def playWhite():
 
 def alarm():
     global wakeUp
+    global p1
     wakeUp = True
-    # t1.kill() # Need to find way to kill playWhite
+    p1.terminate()
+    time.sleep(2)
     while(True):
         play(BEEP)
         time.sleep(0.3)
@@ -42,9 +52,9 @@ def waitAlarm():
     now = datetime.now()
     current = now.strftime("%H:%M")
     while (alarm_time != current):
+        time.sleep(5)
         now = datetime.now()
         current = now.strftime("%H:%M")
         print("\"" + current + "\" VS \"" + alarm_time + "\"")
-        time.sleep(5)
 
 main()
