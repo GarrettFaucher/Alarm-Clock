@@ -8,6 +8,7 @@ wakeUp = False
 
 while (wakeUp == False):
     play(whiteNoise)
+    wakeUp = True
 
 while (True):
     play(beep)
